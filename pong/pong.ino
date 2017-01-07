@@ -1,7 +1,9 @@
 #include <Arduboy2.h>
+#include <ArduboyTones.h>
 #include "game.hpp"
 
 Arduboy2 arduboy;
+ArduboyTones sound{ arduboy.audio.enabled };
 
 void
 setup()
