@@ -18,11 +18,13 @@ void Ball::bounce()
 			ball.y < computer.y + PADDLE_HEIGHT))
 	{
 		ball.dx = -ball.dx;
+		sound.tone(PADDLE_FREQ, PADDLE_DUR);
 	}
 	// bounce off the top and bottom of the screen
 	if (ball.y <= 1 || ball.y >= HEIGHT - BALL_SIZE - 1)
 	{
 		ball.dy = -ball.dy;
+		sound.tone(WALL_FREQ, WALL_DUR);
 	}
 }
 

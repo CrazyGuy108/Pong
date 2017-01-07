@@ -98,6 +98,7 @@ gameMain()
 	// check if someone scored
 	if (ball.x >= WIDTH - BALL_SIZE)
 	{
+		sound.tone(POINT_FREQ, POINT_DUR);
 		if (++player.score >= SCORE_MAX)
 		{
 			gameTick = &menuWin;
@@ -110,6 +111,7 @@ gameMain()
 	}
 	else if (ball.x < 1)
 	{
+		sound.tone(POINT_FREQ, POINT_DUR);
 		if (++computer.score >= SCORE_MAX)
 		{
 			gameTick = &menuLose;
