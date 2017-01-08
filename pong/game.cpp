@@ -22,6 +22,9 @@ static void
 gameMain();
 
 static void
+gamePause();
+
+static void
 menuWin();
 
 static void
@@ -94,6 +97,12 @@ void
 gameMain()
 {
 	draw();
+	// pause the game if needed
+	if (arduboy.justPressed(A_BUTTON))
+	{
+		gameTick = &gamePause;
+		return;
+	}
 	ball.move();
 	// check if someone scored
 	if (ball.x >= WIDTH - BALL_SIZE)
@@ -125,6 +134,17 @@ gameMain()
 	ball.bounce();
 	player.move();
 	computer.move();
+}
+
+void
+gamePause()
+{
+	draw();
+	// resume the game if needed
+	if (arduboy.justPressed(A_BUTTON))
+	{
+		gameTick = &gameMain;
+	}
 }
 
 void
