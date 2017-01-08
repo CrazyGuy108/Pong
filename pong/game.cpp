@@ -70,7 +70,7 @@ menuTitle()
 {
 	arduboy.setCursor(0, 0);
 	arduboy.print(F("Press A to\nstart"));
-	if (arduboy.pressed(A_BUTTON))
+	if (arduboy.justPressed(A_BUTTON))
 	{
 		gameTick = &gameSetup;
 	}
@@ -152,7 +152,7 @@ menuWin()
 {
 	arduboy.setCursor(0, 0);
 	arduboy.print(F("You win!\nPress A to\nrestart"));
-	if (arduboy.pressed(A_BUTTON))
+	if (arduboy.justPressed(A_BUTTON))
 	{
 		gameTick = &gameSetup;
 	}
@@ -163,7 +163,7 @@ menuLose()
 {
 	arduboy.setCursor(0, 0);
 	arduboy.print(F("You lost!\nPress A to\nrestart"));
-	if (arduboy.pressed(A_BUTTON))
+	if (arduboy.justPressed(A_BUTTON))
 	{
 		gameTick = &gameSetup;
 	}
