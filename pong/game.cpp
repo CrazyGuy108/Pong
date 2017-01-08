@@ -22,6 +22,9 @@ static void
 gameMain();
 
 static void
+gamePause();
+
+static void
 menuWin();
 
 static void
@@ -67,7 +70,7 @@ menuTitle()
 {
 	arduboy.setCursor(0, 0);
 	arduboy.print(F("Press A to\nstart"));
-	if (arduboy.pressed(A_BUTTON))
+	if (arduboy.justPressed(A_BUTTON))
 	{
 		gameTick = &gameSetup;
 	}
@@ -94,35 +97,53 @@ void
 gameMain()
 {
 	draw();
+	// pause the game if needed
+	if (arduboy.justPressed(A_BUTTON))
+	{
+		gameTick = &gamePause;
+		return;
+	}
 	ball.move();
-	// check if someone scored
+	ball.bounce();
+	player.move();
+	computer.move();
+	// check if the player scored
 	if (ball.x >= WIDTH - BALL_SIZE)
 	{
 		if (++player.score >= SCORE_MAX)
 		{
 			gameTick = &menuWin;
-			return;
 		}
 		else
 		{
 			resetBall();
 		}
+		sound.tone(POINT_FREQ, POINT_DUR);
 	}
+	// check if the computer scored
 	else if (ball.x < 1)
 	{
 		if (++computer.score >= SCORE_MAX)
 		{
 			gameTick = &menuLose;
-			return;
 		}
 		else
 		{
 			resetBall();
 		}
+		sound.tone(POINT_FREQ, POINT_DUR);
 	}
-	ball.bounce();
-	player.move();
-	computer.move();
+}
+
+void
+gamePause()
+{
+	draw();
+	// resume the game if needed
+	if (arduboy.justPressed(A_BUTTON))
+	{
+		gameTick = &gameMain;
+	}
 }
 
 void
@@ -130,7 +151,7 @@ menuWin()
 {
 	arduboy.setCursor(0, 0);
 	arduboy.print(F("You win!\nPress A to\nrestart"));
-	if (arduboy.pressed(A_BUTTON))
+	if (arduboy.justPressed(A_BUTTON))
 	{
 		gameTick = &gameSetup;
 	}
@@ -141,7 +162,7 @@ menuLose()
 {
 	arduboy.setCursor(0, 0);
 	arduboy.print(F("You lost!\nPress A to\nrestart"));
-	if (arduboy.pressed(A_BUTTON))
+	if (arduboy.justPressed(A_BUTTON))
 	{
 		gameTick = &gameSetup;
 	}
