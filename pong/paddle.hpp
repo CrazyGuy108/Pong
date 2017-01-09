@@ -8,8 +8,8 @@ class Computer;
 
 #include "game.hpp"
 
-#define PADDLE_WIDTH 2
-#define PADDLE_HEIGHT 16
+#define PADDLE_WIDTH 4
+#define PADDLE_HEIGHT 12
 
 // base paddle class
 class PaddleBase

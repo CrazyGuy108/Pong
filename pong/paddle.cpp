@@ -37,7 +37,7 @@ void Player::move_impl()
 void Computer::move_impl()
 {
 	// bother the paddle if the ball is close or a random time
-	if (ball.x > 90 || !random(15))
+	if (ball.x > 80 || !random(10))
 	{
 		// move up if the ball is higher
 		if (ball.y <= y)
