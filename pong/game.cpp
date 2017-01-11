@@ -104,7 +104,6 @@ gameMain()
 		return;
 	}
 	ball.move();
-	ball.bounce();
 	player.move();
 	computer.move();
 	// check if the player scored
