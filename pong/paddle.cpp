@@ -1,6 +1,9 @@
 #include "game.hpp"
 #include "paddle.hpp"
 
+#define AI_REACT 85
+#define AI_RAND 15
+
 void PaddleBase::draw() const
 {
 	arduboy.fillRect(x, y, PADDLE_WIDTH, PADDLE_HEIGHT, WHITE);
@@ -38,7 +41,7 @@ void Player::move_impl()
 void Computer::move_impl()
 {
 	// bother the paddle if the ball is close or a random time
-	if (ball.x > 85 || !random(15))
+	if (ball.x > AI_REACT || !random(AI_RAND))
 	{
 		// move up if the ball is higher
 		if (ball.y <= y)
