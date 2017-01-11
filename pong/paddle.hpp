@@ -3,11 +3,6 @@
 
 #include <stdint.h>
 
-class Player;
-class Computer;
-
-#include "game.hpp"
-
 #define PADDLE_WIDTH 4
 #define PADDLE_HEIGHT 12
 

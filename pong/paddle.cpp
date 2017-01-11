@@ -1,3 +1,4 @@
+#include "game.hpp"
 #include "paddle.hpp"
 
 void PaddleBase::draw() const
