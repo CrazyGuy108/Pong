@@ -36,8 +36,8 @@ void Ball::bounceOff(const PaddleBase& paddle, bool side)
 {
 	// get the minkowski difference between the paddle and the ball
 	// a-b=c, where a=paddle, b=ball, c=diff
-	int16_t cx{ paddle.x - position.getX() - BALL_SIZE };
-	int16_t cy{ paddle.y - position.getY() - BALL_SIZE };
+	int16_t cx{ paddle.position.getX() - position.getX() - BALL_SIZE };
+	int16_t cy{ paddle.position.getY() - position.getY() - BALL_SIZE };
 	constexpr int16_t cw{ PADDLE_WIDTH + BALL_SIZE };
 	constexpr int16_t ch{ PADDLE_HEIGHT + BALL_SIZE };
 	// if the difference contains the origin, then a collision occured

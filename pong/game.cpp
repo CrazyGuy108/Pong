@@ -81,11 +81,11 @@ gameSetup()
 {
 	arduboy.initRandomSeed();
 	resetBall();
-	player.x = 9;
-	player.y = 24; // i thought of something funnier than 24...
+	player.position.setX(9);
+	player.position.setY(24); // i thought of something funnier than 24...
 	player.score = 0;
-	computer.x = WIDTH - PADDLE_WIDTH - 9;
-	computer.y = 25; // twenyfiiive!
+	computer.position.setX(WIDTH - PADDLE_WIDTH - 9);
+	computer.position.setY(25); // twenyfiiive!
 	computer.score = 0;
 	draw();
 	arduboy.display();

@@ -2,6 +2,7 @@
 #define PADDLE_HPP
 
 #include <stdint.h>
+#include "vector.hpp"
 
 #define PADDLE_WIDTH 4
 #define PADDLE_HEIGHT 12
@@ -13,8 +14,7 @@ public:
 	// draws the paddle on the screen
 	void draw() const;
 
-	int16_t x;
-	int16_t y;
+	Vector position;
 	int8_t score;
 
 protected:
