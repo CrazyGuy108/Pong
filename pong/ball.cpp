@@ -6,20 +6,20 @@
 
 void Ball::move()
 {
-	if (y <= 1)
+	if (position.getY() <= 1)
 	{
-		dy = abs(dy);
+		velocity.setY(abs(velocity.getY()));
 		sound.tone(WALL_FREQ, WALL_DUR);
 	}
-	else if (y >= HEIGHT - BALL_SIZE - 1)
+	else if (position.getY() >= HEIGHT - BALL_SIZE - 1)
 	{
-		dy = -abs(dy);
+		velocity.setY(-abs(velocity.getY()));
 		sound.tone(WALL_FREQ, WALL_DUR);
 	}
 	bounceOff(player, LEFT);
 	bounceOff(computer, RIGHT);
-	x += dx;
-	y += dy;
+	position.setX(position.getX() + velocity.getX());
+	position.setY(position.getY() + velocity.getY());
 	// paddles move but walls don't,
 	// so we need to check for paddle collisions again
 	bounceOff(player, LEFT);
@@ -28,15 +28,16 @@ void Ball::move()
 
 void Ball::draw() const
 {
-	arduboy.fillRect(x, y, BALL_SIZE, BALL_SIZE, WHITE);\
+	arduboy.fillRect(position.getX(), position.getY(), BALL_SIZE,
+		BALL_SIZE, WHITE);
 }
 
 void Ball::bounceOff(const PaddleBase& paddle, bool side)
 {
 	// get the minkowski difference between the paddle and the ball
 	// a-b=c, where a=paddle, b=ball, c=diff
-	int16_t cx{ paddle.x - x - BALL_SIZE };
-	int16_t cy{ paddle.y - y - BALL_SIZE };
+	int16_t cx{ paddle.x - position.getX() - BALL_SIZE };
+	int16_t cy{ paddle.y - position.getY() - BALL_SIZE };
 	constexpr int16_t cw{ PADDLE_WIDTH + BALL_SIZE };
 	constexpr int16_t ch{ PADDLE_HEIGHT + BALL_SIZE };
 	// if the difference contains the origin, then a collision occured
@@ -58,14 +59,14 @@ void Ball::bounceOff(const PaddleBase& paddle, bool side)
 		else if (cy + ch == 0)
 		{
 			bounceOff(side);
-			dy = abs(dy);
+			velocity.setY(abs(velocity.getY()));
 			sound.tone(PADDLE_FREQ, PADDLE_DUR);
 		}
 		// ball collides on the top
 		else if (cy == 0)
 		{
 			bounceOff(side);
-			dy = -abs(dy);
+			velocity.setY(-abs(velocity.getY()));
 			sound.tone(PADDLE_FREQ, PADDLE_DUR);
 		}
 	}
@@ -75,10 +76,10 @@ void Ball::bounceOff(bool side)
 {
 	if (!side) // left
 	{
-		dx = abs(dx);
+		velocity.setX(abs(velocity.getX()));
 	}
 	else // right
 	{
-		dx = -abs(dx);
+		velocity.setX(-abs(velocity.getX()));
 	}
 }

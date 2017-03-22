@@ -41,15 +41,15 @@ void Player::move_impl()
 void Computer::move_impl()
 {
 	// bother the paddle if the ball is close or a random time
-	if (ball.x > AI_REACT || !random(AI_RAND))
+	if (ball.position.getX() > AI_REACT || !random(AI_RAND))
 	{
 		// move up if the ball is higher
-		if (ball.y <= y)
+		if (ball.position.getY() <= y)
 		{
 			PaddleBase::move(-1);
 		}
 		// move down if the ball is lower
-		if (ball.y + BALL_SIZE >= y + PADDLE_HEIGHT)
+		if (ball.position.getY() + BALL_SIZE >= y + PADDLE_HEIGHT)
 		{
 			PaddleBase::move(1);
 		}

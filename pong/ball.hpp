@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "paddle.hpp"
+#include "vector.hpp"
 
 #define BALL_SIZE 3
 
@@ -15,10 +16,8 @@ public:
 	// draws the ball on the screen
 	void draw() const;
 
-	int16_t x;
-	int16_t y;
-	int16_t dx;
-	int16_t dy;
+	Vector position;
+	Vector velocity;
 
 private:
 	// verifies and responds to a collision with a paddle

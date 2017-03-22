@@ -59,10 +59,10 @@ draw()
 void
 resetBall()
 {
-	ball.x = WIDTH / 2;
-	ball.y = HEIGHT / 2;
-	ball.dx = 1;
-	ball.dy = 1;
+	ball.position.setX(WIDTH / 2);
+	ball.position.setY(HEIGHT / 2);
+	ball.velocity.setX(1);
+	ball.velocity.setY(1);
 }
 
 void
@@ -107,7 +107,7 @@ gameMain()
 	player.move();
 	computer.move();
 	// check if the player scored
-	if (ball.x >= WIDTH - BALL_SIZE)
+	if (ball.position.getX() >= WIDTH - BALL_SIZE)
 	{
 		if (++player.score >= SCORE_MAX)
 		{
@@ -120,7 +120,7 @@ gameMain()
 		sound.tone(POINT_FREQ, POINT_DUR);
 	}
 	// check if the computer scored
-	else if (ball.x < 1)
+	else if (ball.position.getX() < 1)
 	{
 		if (++computer.score >= SCORE_MAX)
 		{
