@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "vector.hpp"
 
 #define SCORE_MAX 3
 
@@ -59,10 +60,8 @@ draw()
 void
 resetBall()
 {
-	ball.position.setX(WIDTH / 2);
-	ball.position.setY(HEIGHT / 2);
-	ball.velocity.setX(1);
-	ball.velocity.setY(1);
+	ball.setPosition(Vector{ WIDTH / 2, HEIGHT / 2 });
+	ball.setVelocity(Vector{ 1, 1 });
 }
 
 void
@@ -81,11 +80,11 @@ gameSetup()
 {
 	arduboy.initRandomSeed();
 	resetBall();
-	player.position.setX(9);
-	player.position.setY(24); // i thought of something funnier than 24...
+	// i thought of something funnier than 24...
+	player.setPosition(Vector{ 9, 24 });
 	player.score = 0;
-	computer.position.setX(WIDTH - PADDLE_WIDTH - 9);
-	computer.position.setY(25); // twenyfiiive!
+	// twenyfiiive!
+	computer.setPosition(Vector{ WIDTH - PADDLE_WIDTH - 9, 25 });
 	computer.score = 0;
 	draw();
 	arduboy.display();
@@ -107,7 +106,7 @@ gameMain()
 	player.move();
 	computer.move();
 	// check if the player scored
-	if (ball.position.getX() >= WIDTH - BALL_SIZE)
+	if (ball.getPosition().getX() >= WIDTH - BALL_SIZE)
 	{
 		if (++player.score >= SCORE_MAX)
 		{
@@ -120,7 +119,7 @@ gameMain()
 		sound.tone(POINT_FREQ, POINT_DUR);
 	}
 	// check if the computer scored
-	else if (ball.position.getX() < 1)
+	else if (ball.getPosition().getX() < 1)
 	{
 		if (++computer.score >= SCORE_MAX)
 		{

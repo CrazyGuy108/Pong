@@ -11,10 +11,12 @@
 class PaddleBase
 {
 public:
+	const Vector& getPosition() const noexcept;
+	void setPosition(const Vector& v) noexcept;
+
 	// draws the paddle on the screen
 	void draw() const;
 
-	Vector position;
 	int8_t score;
 
 protected:
@@ -22,6 +24,9 @@ protected:
 
 	// moves the paddle up(-) or down(+)
 	void move(int16_t distance);
+
+private:
+	Vector position;
 };
 
 // statically polymorphic paddle

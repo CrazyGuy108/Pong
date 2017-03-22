@@ -4,6 +4,16 @@
 #define AI_REACT 85
 #define AI_RAND 15
 
+const Vector& PaddleBase::getPosition() const noexcept
+{
+	return position;
+}
+
+void PaddleBase::setPosition(const Vector& v) noexcept
+{
+	position = v;
+}
+
 void PaddleBase::draw() const
 {
 	arduboy.fillRect(position.getX(), position.getY(), PADDLE_WIDTH,
@@ -42,16 +52,16 @@ void Player::move_impl()
 void Computer::move_impl()
 {
 	// bother the paddle if the ball is close or a random time
-	if (ball.position.getX() > AI_REACT || !random(AI_RAND))
+	if (ball.getPosition().getX() > AI_REACT || !random(AI_RAND))
 	{
 		// move up if the ball is higher
-		if (ball.position.getY() <= position.getY())
+		if (ball.getPosition().getY() <= getPosition().getY())
 		{
 			PaddleBase::move(-1);
 		}
 		// move down if the ball is lower
-		if (ball.position.getY() + BALL_SIZE >=
-			position.getY() + PADDLE_HEIGHT)
+		if (ball.getPosition().getY() + BALL_SIZE >=
+			getPosition().getY() + PADDLE_HEIGHT)
 		{
 			PaddleBase::move(1);
 		}
