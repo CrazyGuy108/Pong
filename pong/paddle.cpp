@@ -1,5 +1,5 @@
-#include "game.hpp"
 #include "paddle.hpp"
+#include "game.hpp"
 
 #define AI_REACT 85
 #define AI_RAND 15

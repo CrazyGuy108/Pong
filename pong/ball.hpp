@@ -1,8 +1,8 @@
 #ifndef BALL_HPP
 #define BALL_HPP
 
-#include <stdint.h>
 #include "vector.hpp"
+#include <stdint.h>
 
 #define BALL_SIZE 3
 

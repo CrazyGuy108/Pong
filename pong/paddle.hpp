@@ -1,8 +1,8 @@
 #ifndef PADDLE_HPP
 #define PADDLE_HPP
 
-#include <stdint.h>
 #include "vector.hpp"
+#include <stdint.h>
 
 #define PADDLE_WIDTH 4
 #define PADDLE_HEIGHT 12
