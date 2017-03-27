@@ -22,27 +22,86 @@ void Ball::setPosition(const Vector& v) noexcept
 
 void Ball::setVelocity(const Vector& v) noexcept
 {
+	bool changed{ velocity.getX() != v.getX() ||
+		velocity.getY() != v.getY() };
 	velocity = v;
+	// reset the incremental error value
+	if (changed)
+	{
+		if (isVelocitySteep())
+		{
+			err = velocity.getY();
+		}
+		else
+		{
+			err = velocity.getX();
+		}
+		err /= 2;
+	}
 }
 
 void Ball::move()
 {
+	// bounce off the walls
 	if (position.getY() <= 1)
 	{
-		velocity.setY(abs(velocity.getY()));
+		setVelocity(Vector{ velocity.getX(), abs(velocity.getY()) });
 		sound.tone(WALL_FREQ, WALL_DUR);
 	}
 	else if (position.getY() >= HEIGHT - BALL_SIZE - 1)
 	{
-		velocity.setY(-abs(velocity.getY()));
+		setVelocity(Vector{ velocity.getX(), -abs(velocity.getY()) });
 		sound.tone(WALL_FREQ, WALL_DUR);
 	}
+	// check collisions with the two paddles
 	bounceOff(player, LEFT);
 	bounceOff(computer, RIGHT);
-	position.setX(position.getX() + velocity.getX());
-	position.setY(position.getY() + velocity.getY());
-	// paddles move but walls don't,
-	// so we need to check for paddle collisions again
+	// move the ball using an adaptation of Arduboy2's drawLine()
+	bool steep{ isVelocitySteep() };
+	if (steep)
+	{
+		position.setY(position.getY() + (velocity.getY() > 0 ? 1 : -1));
+		err -= abs(velocity.getX());
+	}
+	else
+	{
+		position.setX(position.getX() + (velocity.getX() > 0 ? 1 : -1));
+		err -= abs(velocity.getY());
+	}
+	// time to correct the incremental error
+	if (err < 0)
+	{
+		int16_t change; // the delta x or y needed to correct the error
+		if (steep)
+		{
+			// correct the x coordinate
+			if (velocity.getX() > 0)
+			{
+				change = 1;
+			}
+			else
+			{
+				change = -1;
+			}
+			position.setX(position.getX() + change);
+			err += abs(velocity.getY());
+		}
+		else
+		{
+			// correct the y coordinate
+			if (velocity.getY() > 0)
+			{
+				change = 1;
+			}
+			else
+			{
+				change = -1;
+			}
+			position.setY(position.getY() + change);
+			err += abs(velocity.getX());
+		}
+	}
+	// check for paddle collisions again, just to be sure
 	bounceOff(player, LEFT);
 	bounceOff(computer, RIGHT);
 }
@@ -80,14 +139,16 @@ void Ball::bounceOff(const PaddleBase& paddle, bool side)
 		else if (cy + ch == 0)
 		{
 			bounceOff(side);
-			velocity.setY(abs(velocity.getY()));
+			setVelocity(Vector{ velocity.getX(),
+				abs(velocity.getY()) });
 			sound.tone(PADDLE_FREQ, PADDLE_DUR);
 		}
 		// ball collides on the top
 		else if (cy == 0)
 		{
 			bounceOff(side);
-			velocity.setY(-abs(velocity.getY()));
+			setVelocity(Vector{ velocity.getX(),
+				-abs(velocity.getY()) });
 			sound.tone(PADDLE_FREQ, PADDLE_DUR);
 		}
 	}
@@ -97,10 +158,15 @@ void Ball::bounceOff(bool side)
 {
 	if (!side) // left
 	{
-		velocity.setX(abs(velocity.getX()));
+		setVelocity(Vector{ abs(velocity.getX()), velocity.getY() });
 	}
 	else // right
 	{
-		velocity.setX(-abs(velocity.getX()));
+		setVelocity(Vector{ -abs(velocity.getX()), velocity.getY() });
 	}
+}
+
+bool Ball::isVelocitySteep() const
+{
+	return abs(velocity.getY()) > abs(velocity.getX());
 }

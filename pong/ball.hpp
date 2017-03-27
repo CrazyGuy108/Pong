@@ -30,8 +30,12 @@ private:
 	// bounces the ball off of the left(false) or right(true) side
 	void bounceOff(bool side);
 
+	// checks if the velocity's slope is greater than 1, meaning it's steep
+	bool isVelocitySteep() const;
+
 	Vector position;
 	Vector velocity;
+	int16_t err; // incremental error when animating the ball
 };
 
 #endif // BALL_HPP
