@@ -9,9 +9,24 @@ const Vector& PaddleBase::getPosition() const noexcept
 	return position;
 }
 
+int8_t PaddleBase::getScore() const noexcept
+{
+	return score;
+}
+
 void PaddleBase::setPosition(const Vector& v) noexcept
 {
 	position = v;
+}
+
+void PaddleBase::updateScore() noexcept
+{
+	++score;
+}
+
+void PaddleBase::resetScore() noexcept
+{
+	score = 0;
 }
 
 void PaddleBase::draw() const

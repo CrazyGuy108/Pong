@@ -48,9 +48,9 @@ draw()
 	}
 	// scores
 	arduboy.setCursor(WIDTH/2 - 12, 2);
-	arduboy.print(player.score);
+	arduboy.print(player.getScore());
 	arduboy.setCursor(WIDTH/2 + 3, 2);
-	arduboy.print(computer.score);
+	arduboy.print(computer.getScore());
 	// objects
 	ball.draw();
 	player.draw();
@@ -82,10 +82,9 @@ gameSetup()
 	resetBall();
 	// i thought of something funnier than 24...
 	player.setPosition(Vector{ 9, 24 });
-	player.score = 0;
-	// twenyfiiive!
+	player.resetScore();
 	computer.setPosition(Vector{ WIDTH - PADDLE_WIDTH - 9, 25 });
-	computer.score = 0;
+	computer.resetScore();
 	draw();
 	arduboy.display();
 	delay(1000);
@@ -108,7 +107,8 @@ gameMain()
 	// check if the player scored
 	if (ball.getPosition().getX() >= WIDTH - BALL_SIZE)
 	{
-		if (++player.score >= SCORE_MAX)
+		player.updateScore();
+		if (player.getScore() >= SCORE_MAX)
 		{
 			gameTick = &menuWin;
 		}
@@ -121,7 +121,8 @@ gameMain()
 	// check if the computer scored
 	else if (ball.getPosition().getX() < 1)
 	{
-		if (++computer.score >= SCORE_MAX)
+		computer.updateScore();
+		if (computer.getScore() >= SCORE_MAX)
 		{
 			gameTick = &menuLose;
 		}
