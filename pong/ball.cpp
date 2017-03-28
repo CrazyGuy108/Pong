@@ -123,34 +123,11 @@ void Ball::bounceOff(const PaddleBase& paddle, bool side)
 	// if the difference contains the origin, then a collision occured
 	if (cx <= 0 && cx + cw >= 0 && cy <= 0 && cy + ch >= 0)
 	{
-		// ball collides on the right
-		if (cx + cw == 0)
-		{
-			bounceOff(LEFT);
-			sound.tone(PADDLE_FREQ, PADDLE_DUR);
-		}
-		// ball collides on the left
-		else if (cx == 0)
-		{
-			bounceOff(RIGHT);
-			sound.tone(PADDLE_FREQ, PADDLE_DUR);
-		}
-		// ball collides on the bottom
-		else if (cy + ch == 0)
-		{
-			bounceOff(side);
-			setVelocity(Vector{ velocity.getX(),
-				abs(velocity.getY()) });
-			sound.tone(PADDLE_FREQ, PADDLE_DUR);
-		}
-		// ball collides on the top
-		else if (cy == 0)
-		{
-			bounceOff(side);
-			setVelocity(Vector{ velocity.getX(),
-				-abs(velocity.getY()) });
-			sound.tone(PADDLE_FREQ, PADDLE_DUR);
-		}
+		// calculate the direction relative to the center of the paddle
+		Vector paddleCenter{ paddle.getPosition().getX() + (PADDLE_WIDTH / 2),
+			paddle.getPosition().getY() + (PADDLE_HEIGHT / 2) };
+		setVelocity(Vector{ position - paddleCenter });
+		sound.tone(PADDLE_FREQ, PADDLE_DUR);
 	}
 }
 
