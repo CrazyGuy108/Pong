@@ -1,7 +1,7 @@
 #include "paddle.hpp"
 #include "game.hpp"
 
-#define AI_REACT 85
+#define AI_REACT_X 95
 #define AI_RAND 15
 
 const Vector& PaddleBase::getPosition() const noexcept
@@ -67,7 +67,7 @@ void Player::move_impl()
 void Computer::move_impl()
 {
 	// bother the paddle if the ball is close or a random time
-	if (ball.getPosition().getX() > AI_REACT || !random(AI_RAND))
+	if (ball.getPosition().getX() > AI_REACT_X || !random(AI_RAND))
 	{
 		// move up if the ball is higher
 		if (ball.getPosition().getY() <= getPosition().getY())
