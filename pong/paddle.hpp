@@ -1,6 +1,7 @@
 #ifndef PADDLE_HPP
 #define PADDLE_HPP
 
+#include "vector.hpp"
 #include <stdint.h>
 
 #define PADDLE_WIDTH 4
@@ -10,18 +11,24 @@
 class PaddleBase
 {
 public:
+	const Vector& getPosition() const noexcept;
+	int8_t getScore() const noexcept;
+	void setPosition(const Vector& v) noexcept;
+	void updateScore() noexcept;
+	void resetScore() noexcept;
+
 	// draws the paddle on the screen
 	void draw() const;
-
-	int16_t x;
-	int16_t y;
-	int8_t score;
 
 protected:
 	PaddleBase() = default;
 
 	// moves the paddle up(-) or down(+)
 	void move(int16_t distance);
+
+private:
+	Vector position;
+	int8_t score;
 };
 
 // statically polymorphic paddle

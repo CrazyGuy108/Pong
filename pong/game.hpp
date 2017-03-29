@@ -1,10 +1,10 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include <Arduboy2.h>
-#include <ArduboyTones.h>
 #include "ball.hpp"
 #include "paddle.hpp"
+#include <Arduboy2.h>
+#include <ArduboyTones.h>
 
 #define WALL_FREQ   NOTE_A3
 #define PADDLE_FREQ NOTE_A4
