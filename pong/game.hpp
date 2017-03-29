@@ -16,9 +16,10 @@
 extern Arduboy2 arduboy; // found in pong.ino
 extern ArduboyTones sound; // found in pong.ino
 
-extern void (*gameTick)();
 extern Ball ball;
 extern Player player;
 extern Computer computer;
+
+void tick();
 
 #endif // GAME_HPP

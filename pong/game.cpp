@@ -31,10 +31,18 @@ menuWin();
 static void
 menuLose();
 
-void (*gameTick)(){ &menuTitle };
+typedef void (*tick_func_t)();
+
+static tick_func_t gameTick{ &menuTitle };
+
 Ball ball;
 Player player;
 Computer computer;
+
+void tick()
+{
+	gameTick();
+}
 
 void
 draw()

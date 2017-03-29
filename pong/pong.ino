@@ -22,6 +22,6 @@ loop()
 		return;
 	}
 	arduboy.pollButtons();
-	gameTick();
+	tick();
 	arduboy.display(CLEAR_BUFFER);
 }
