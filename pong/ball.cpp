@@ -30,34 +30,39 @@ void Ball::setVelocity(const Vector& v) noexcept
 	{
 		if (isVelocitySteep())
 		{
-			err = velocity.getY();
+			err = velocity.getY() / 2;
 		}
 		else
 		{
-			err = velocity.getX();
+			err = velocity.getX() / 2;
 		}
-		err /= 2;
 	}
 }
 
 void Ball::move()
 {
 	// bounce off the walls
-	if (position.getY() <= 1)
-	{
-		setVelocity(Vector{ velocity.getX(), abs(velocity.getY()) });
-		sound.tone(WALL_FREQ, WALL_DUR);
-	}
-	else if (position.getY() >= HEIGHT - BALL_SIZE - 1)
-	{
-		setVelocity(Vector{ velocity.getX(), -abs(velocity.getY()) });
-		sound.tone(WALL_FREQ, WALL_DUR);
-	}
-	// check collisions with the two paddles
+	checkWalls();
+	// bounce off the two paddles
 	bounceOff(player, LEFT);
 	bounceOff(computer, RIGHT);
-	// move the ball using an adaptation of Arduboy2's drawLine()
+	// actually move the ball
+	animate();
+}
+
+void Ball::draw() const
+{
+	arduboy.fillRect(position.getX(), position.getY(), BALL_SIZE,
+		BALL_SIZE, WHITE);
+}
+
+void Ball::animate()
+{
+	// move the ball using an adaptation of Arduboy2Base::drawLine()
 	bool steep{ isVelocitySteep() };
+	// increment x (slope <= 1) or y (slope > 1)
+	// the other coordinate isn't incremented just yet, so that contributes
+	//  to the incremental error until it becomes big enough to deal with
 	if (steep)
 	{
 		position.setY(position.getY() + (velocity.getY() > 0 ? 1 : -1));
@@ -101,15 +106,22 @@ void Ball::move()
 			err += abs(velocity.getX());
 		}
 	}
-	// check for paddle collisions again, just to be sure
-	bounceOff(player, LEFT);
-	bounceOff(computer, RIGHT);
 }
 
-void Ball::draw() const
+void Ball::checkWalls()
 {
-	arduboy.fillRect(position.getX(), position.getY(), BALL_SIZE,
-		BALL_SIZE, WHITE);
+	// bounce off the top wall
+	if (position.getY() <= 1)
+	{
+		setVelocity(Vector{ velocity.getX(), abs(velocity.getY()) });
+		sound.tone(WALL_FREQ, WALL_DUR);
+	}
+	// bounce off the bottom wall
+	else if (position.getY() >= HEIGHT - BALL_SIZE - 1)
+	{
+		setVelocity(Vector{ velocity.getX(), -abs(velocity.getY()) });
+		sound.tone(WALL_FREQ, WALL_DUR);
+	}
 }
 
 void Ball::bounceOff(const PaddleBase& paddle, bool side)
