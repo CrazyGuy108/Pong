@@ -41,13 +41,16 @@ void Ball::setVelocity(const Vector& v) noexcept
 
 void Ball::move()
 {
-	// bounce off the walls
-	checkWalls();
-	// bounce off the two paddles
-	bounceOff(player, LEFT);
-	bounceOff(computer, RIGHT);
-	// actually move the ball
-	animate();
+	for (int8_t i{ 0 }; i < 2; ++i)
+	{
+		// bounce off the walls
+		checkWalls();
+		// bounce off the two paddles
+		bounceOff(player, LEFT);
+		bounceOff(computer, RIGHT);
+		// actually move the ball
+		animate();
+	}
 }
 
 void Ball::draw() const
