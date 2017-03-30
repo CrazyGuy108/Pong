@@ -16,13 +16,19 @@ public:
 	void setPosition(const Vector& v) noexcept;
 	void setVelocity(const Vector& v) noexcept;
 
-	// moves and bounces the ball based on dx and dy
+	// moves and bounces the ball
 	void move();
 
 	// draws the ball on the screen
 	void draw() const;
 
 private:
+	// animates the ball according to the velocity
+	void animate();
+
+	// verifies and responds to a collision with the walls
+	void checkWalls();
+
 	// verifies and responds to a collision with a paddle
 	// on the ball's left(false) or right(true) side
 	void bounceOff(const PaddleBase& paddle, bool side);
