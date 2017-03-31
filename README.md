@@ -2,8 +2,8 @@
 A Pong clone for the Arduboy
 
 ## Controls
-Press the up/down buttons to move your paddle (on the left side) up/down.
-Press A to start/restart a new one if prompted, or to pause/unpause the game.
+Up and Down buttons: Move your paddle (on the left) up or down respectively.
+A button: Pause or unpause the game.
 
 ## Features
 * Basic singleplayer mode AI that can be beat.
