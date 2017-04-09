@@ -52,7 +52,7 @@ void PaddleBase::move(int16_t distance)
 	}
 }
 
-void Player::move_impl()
+void Player1::move_impl()
 {
 	if (arduboy.pressed(UP_BUTTON))
 	{
@@ -64,7 +64,7 @@ void Player::move_impl()
 	}
 }
 
-void Computer::move_impl()
+void Player2::move_impl()
 {
 	if (twoPlayerGame())
 	{

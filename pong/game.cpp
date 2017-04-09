@@ -26,10 +26,10 @@ static void
 gamePause();
 
 static void
-menuWin();
+menuWin1();
 
 static void
-menuLose();
+menuWin2();
 
 typedef void (*tick_func_t)();
 
@@ -37,8 +37,8 @@ static tick_func_t gameTick{ &menuTitle };
 static bool twoPlayers{ false };
 
 Ball ball;
-Player player;
-Computer computer;
+Player1 player1;
+Player2 player2;
 
 void tick()
 {
@@ -62,13 +62,13 @@ draw()
 	}
 	// scores
 	arduboy.setCursor(WIDTH/2 - 12, 2);
-	arduboy.print(player.getScore());
+	arduboy.print(player1.getScore());
 	arduboy.setCursor(WIDTH/2 + 3, 2);
-	arduboy.print(computer.getScore());
+	arduboy.print(player2.getScore());
 	// objects
 	ball.draw();
-	player.draw();
-	computer.draw();
+	player1.draw();
+	player2.draw();
 }
 
 void
@@ -102,10 +102,10 @@ gameSetup()
 	arduboy.initRandomSeed();
 	resetBall();
 	// i thought of something funnier than 24...
-	player.setPosition(Vector{ 9, 24 });
-	player.resetScore();
-	computer.setPosition(Vector{ WIDTH - PADDLE_WIDTH - 9, 25 });
-	computer.resetScore();
+	player1.setPosition(Vector{ 9, 24 });
+	player1.resetScore();
+	player2.setPosition(Vector{ WIDTH - PADDLE_WIDTH - 9, 25 });
+	player2.resetScore();
 	draw();
 	arduboy.display();
 	delay(1000);
@@ -123,15 +123,15 @@ gameMain()
 		return;
 	}
 	ball.move();
-	player.move();
-	computer.move();
-	// check if the player scored
+	player1.move();
+	player2.move();
+	// check if player 1 scored
 	if (ball.getPosition().getX() >= WIDTH - BALL_SIZE)
 	{
-		player.updateScore();
-		if (player.getScore() >= SCORE_MAX)
+		player1.updateScore();
+		if (player1.getScore() >= SCORE_MAX)
 		{
-			gameTick = &menuWin;
+			gameTick = &menuWin1;
 		}
 		else
 		{
@@ -139,13 +139,13 @@ gameMain()
 		}
 		sound.tone(POINT_FREQ, POINT_DUR);
 	}
-	// check if the computer scored
+	// check if player 2 scored
 	else if (ball.getPosition().getX() < 1)
 	{
-		computer.updateScore();
-		if (computer.getScore() >= SCORE_MAX)
+		player2.updateScore();
+		if (player2.getScore() >= SCORE_MAX)
 		{
-			gameTick = &menuLose;
+			gameTick = &menuWin2;
 		}
 		else
 		{
@@ -167,10 +167,10 @@ gamePause()
 }
 
 void
-menuWin()
+menuWin1()
 {
 	arduboy.setCursor(0, 0);
-	arduboy.print(F("You win!\nPress A to\nrestart"));
+	arduboy.print(F("Player 1\nwins!\nPress A to\nrestart"));
 	if (arduboy.justPressed(A_BUTTON))
 	{
 		gameTick = &gameSetup;
@@ -178,10 +178,10 @@ menuWin()
 }
 
 void
-menuLose()
+menuWin2()
 {
 	arduboy.setCursor(0, 0);
-	arduboy.print(F("You lost!\nPress A to\nrestart"));
+	arduboy.print(F("Player 2\nwins!\nPress A to\nrestart"));
 	if (arduboy.justPressed(A_BUTTON))
 	{
 		gameTick = &gameSetup;

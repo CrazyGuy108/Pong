@@ -46,8 +46,8 @@ void Ball::move()
 		// bounce off the walls
 		checkWalls();
 		// bounce off the two paddles
-		bounceOff(player, LEFT);
-		bounceOff(computer, RIGHT);
+		bounceOff(player1, LEFT);
+		bounceOff(player2, RIGHT);
 		// actually move the ball
 		animate();
 	}
