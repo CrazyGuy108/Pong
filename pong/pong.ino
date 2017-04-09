@@ -8,6 +8,7 @@ ArduboyTones sound{ arduboy.audio.enabled };
 void
 setup()
 {
+	Serial.begin(9600);
 	arduboy.begin();
 	arduboy.setFrameRate(30);
 	arduboy.setTextSize(2);
@@ -23,5 +24,6 @@ loop()
 	}
 	arduboy.pollButtons();
 	tick();
+	Serial.write(arduboy.getBuffer(), 128 * 64 / 8);
 	arduboy.display(CLEAR_BUFFER);
 }
