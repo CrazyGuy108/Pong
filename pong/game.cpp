@@ -34,6 +34,7 @@ menuLose();
 typedef void (*tick_func_t)();
 
 static tick_func_t gameTick{ &menuTitle };
+static bool twoPlayers{ false };
 
 Ball ball;
 Player player;
@@ -42,6 +43,11 @@ Computer computer;
 void tick()
 {
 	gameTick();
+}
+
+bool twoPlayerGame()
+{
+	return twoPlayers;
 }
 
 void
@@ -76,7 +82,14 @@ void
 menuTitle()
 {
 	arduboy.setCursor(0, 0);
-	arduboy.print(F("Press A to\nstart"));
+	arduboy.print(F("players:"));
+	arduboy.setCursor(96, 0);
+	arduboy.print(twoPlayers ? 2 : 1);
+	if (arduboy.justPressed(LEFT_BUTTON) ||
+		arduboy.justPressed(RIGHT_BUTTON))
+	{
+		twoPlayers = !twoPlayers;
+	}
 	if (arduboy.justPressed(A_BUTTON))
 	{
 		gameTick = &gameSetup;
@@ -104,7 +117,7 @@ gameMain()
 {
 	draw();
 	// pause the game if needed
-	if (arduboy.justPressed(A_BUTTON))
+	if (arduboy.justPressed(LEFT_BUTTON))
 	{
 		gameTick = &gamePause;
 		return;
@@ -147,7 +160,7 @@ gamePause()
 {
 	draw();
 	// resume the game if needed
-	if (arduboy.justPressed(A_BUTTON))
+	if (arduboy.justPressed(LEFT_BUTTON))
 	{
 		gameTick = &gameMain;
 	}

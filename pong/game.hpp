@@ -22,4 +22,7 @@ extern Computer computer;
 
 void tick();
 
+// true if the game is being played with 2 players, false if just 1
+bool twoPlayerGame();
+
 #endif // GAME_HPP
