@@ -43,20 +43,20 @@ protected:
 	Paddle() = default;
 };
 
-// player paddle
-class Player final
-	: public Paddle<Player>
+// player 1's paddle
+class Player1 final
+	: public Paddle<Player1>
 {
-	friend class Paddle<Player>;
+	friend class Paddle<Player1>;
 private:
 	void move_impl();
 };
 
-// computer paddle
-class Computer final
-	: public Paddle<Computer>
+// player 2's paddle
+class Player2 final
+	: public Paddle<Player2>
 {
-	friend class Paddle<Computer>;
+	friend class Paddle<Player2>;
 private:
 	void move_impl();
 };

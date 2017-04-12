@@ -52,7 +52,7 @@ void PaddleBase::move(int16_t distance)
 	}
 }
 
-void Player::move_impl()
+void Player1::move_impl()
 {
 	if (arduboy.pressed(UP_BUTTON))
 	{
@@ -64,21 +64,35 @@ void Player::move_impl()
 	}
 }
 
-void Computer::move_impl()
+void Player2::move_impl()
 {
-	// bother the paddle if the ball is close or a random time
-	if (ball.getPosition().getX() > AI_REACT_X || !random(AI_RAND))
+	if (twoPlayerGame())
 	{
-		// move up if the ball is higher
-		if (ball.getPosition().getY() <= getPosition().getY())
+		if (arduboy.pressed(B_BUTTON))
 		{
 			PaddleBase::move(-1);
 		}
-		// move down if the ball is lower
-		if (ball.getPosition().getY() + BALL_SIZE >=
-			getPosition().getY() + PADDLE_HEIGHT)
+		if (arduboy.pressed(A_BUTTON))
 		{
 			PaddleBase::move(1);
+		}
+	}
+	else
+	{
+		// bother the paddle if the ball is close or a random time
+		if (ball.getPosition().getX() > AI_REACT_X || !random(AI_RAND))
+		{
+			// move up if the ball is higher
+			if (ball.getPosition().getY() <= getPosition().getY())
+			{
+				PaddleBase::move(-1);
+			}
+			// move down if the ball is lower
+			if (ball.getPosition().getY() + BALL_SIZE >=
+				getPosition().getY() + PADDLE_HEIGHT)
+			{
+				PaddleBase::move(1);
+			}
 		}
 	}
 }

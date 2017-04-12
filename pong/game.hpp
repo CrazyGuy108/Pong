@@ -17,9 +17,12 @@ extern Arduboy2 arduboy; // found in pong.ino
 extern ArduboyTones sound; // found in pong.ino
 
 extern Ball ball;
-extern Player player;
-extern Computer computer;
+extern Player1 player1;
+extern Player2 player2;
 
 void tick();
+
+// true if the game is being played with 2 players, false if just 1
+bool twoPlayerGame();
 
 #endif // GAME_HPP
