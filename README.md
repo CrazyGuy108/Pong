@@ -1,4 +1,4 @@
-# Pong v1.2.1
+# Pong v1.3.0
 A Pong clone for the Arduboy
 
 ## Controls
