@@ -11,5 +11,8 @@ A Pong clone for the Arduboy
 * Ball can travel at an angle (without floating point math!).
 * Also changes its direction based on where it hits the paddle.
 
+## Things I learned
+This game taught me the basics of vector math. I was able to calculate the new velocity of the ball based on its position and the center of the paddle it was hitting. After that, a version of Bresenham's line algorithm was used to animate the ball using ints instead of floats (a huge performance gain in the context of an 8-bit Arduino microcontroller!), mostly copied from Arduboy2's implementation.
+
 ## Copyright
 This project is under the MIT license.
