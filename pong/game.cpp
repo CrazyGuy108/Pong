@@ -101,10 +101,10 @@ gameSetup()
 {
 	arduboy.initRandomSeed();
 	resetBall();
-	// i thought of something funnier than 24...
+	// set both paddles in the center of the vertical space
 	player1.setPosition(Vector{ 9, 24 });
 	player1.resetScore();
-	player2.setPosition(Vector{ WIDTH - PADDLE_WIDTH - 9, 25 });
+	player2.setPosition(Vector{ WIDTH - PADDLE_WIDTH - 9, 24 });
 	player2.resetScore();
 	draw();
 	arduboy.display();
