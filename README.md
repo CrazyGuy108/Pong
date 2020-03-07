@@ -1,9 +1,11 @@
 # Pong v1.3.1
-A Pong clone for the Arduboy
+A Pong clone that can be run on an [Arduboy](https://arduboy.com/).
+
+[Demo](https://www.youtube.com/watch?v=_gbg10wPaak)
 
 ## Controls
 * Up and Down buttons: Move the left paddle up or down respectively.
-* A and B buttons: Move the right paddle up or down respectively (2player mode).
+* A and B buttons: Move the right paddle up or down respectively (2-player mode).
 * Left button: Pause and unpause the game.
 
 ## Features
