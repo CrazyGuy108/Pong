@@ -1,8 +1,9 @@
 #include "paddle.hpp"
 #include "game.hpp"
 
-#define AI_REACT_X 95
-#define AI_RAND 15
+// config for ai
+#define AI_REACT_X 95 // cutoff for reacting to the ball
+#define AI_RAND 15 // reciprocal of the chance of reacting before the cutoff
 
 const Vector& PaddleBase::getPosition() const noexcept
 {
